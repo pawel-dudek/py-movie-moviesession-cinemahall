@@ -2,17 +2,16 @@ from db.models import Movie
 
 
 def get_movies(genres_ids: list = None,
-               actors_ids: list = None) -> None:
-    # genres_id = Genre.objects.all().values_list("id", flat=True)
-    # actors_id = Actor.objects.all().values_list("id", flat=True)
+               actors_ids: list = None) -> Movie:
 
     if genres_ids and actors_ids:
         return Movie.objects.filter(genres__in=genres_ids,
-                                    actors__in=actors_ids)
+                                    actors__in=actors_ids).distinct()
+
     elif genres_ids:
-        return Movie.objects.filter(genres__in=genres_ids)
+        return Movie.objects.filter(genres__in=genres_ids).distinct()
     elif actors_ids:
-        return Movie.objects.filter(actors__in=actors_ids)
+        return Movie.objects.filter(actors__in=actors_ids).distinct()
     else:
         return Movie.objects.all()
 
@@ -24,7 +23,7 @@ def get_movie_by_id(movie_id: int) -> Movie:
 def create_movie(movie_title: str,
                  movie_description: str,
                  genres_ids: list = None,
-                 actors_ids: list = None) -> None:
+                 actors_ids: list = None) -> Movie:
     if genres_ids is None:
         genres_ids = []
     if actors_ids is None:
