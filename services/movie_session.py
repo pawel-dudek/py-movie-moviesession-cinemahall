@@ -9,12 +9,11 @@ def create_movie_session(movie_show_time: datetime,
                          movie_id: int,
                          cinema_hall_id: int) -> MovieSession:
 
-    movie_session = MovieSession.objects.create(
+    return MovieSession.objects.create(
         show_time=movie_show_time,
         movie_id=movie_id,
         cinema_hall_id=cinema_hall_id
     )
-    return movie_session
 
 
 def get_movies_sessions(session_date: str = None) -> QuerySet:
@@ -60,8 +59,7 @@ def update_movie_session(session_id: int,
 
 def delete_movie_session_by_id(session_id: int) -> bool:
     try:
-        session = MovieSession.objects.get(id=session_id)
-        session.delete()
+        MovieSession.objects.get(id=session_id).delete()
         return True
     except MovieSession.DoesNotExist:
         return False
