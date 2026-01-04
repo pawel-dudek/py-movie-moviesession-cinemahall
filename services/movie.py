@@ -30,12 +30,12 @@ def create_movie(movie_title: str,
     if actors_ids is None:
         actors_ids = []
 
-    movie__d = Movie.objects.create(
+    movie_obj = Movie.objects.create(
         title=movie_title,
         description=movie_description
     )
 
-    movie__d.genres.set(genres_ids)
-    movie__d.actors.set(actors_ids)
+    movie_obj.genres.set(genres_ids)
+    movie_obj.actors.set(actors_ids)
 
-    return movie__d
+    return movie_obj
