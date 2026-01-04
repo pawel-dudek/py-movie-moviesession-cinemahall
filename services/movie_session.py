@@ -2,6 +2,7 @@ from typing import Optional
 from datetime import datetime
 
 from db.models import MovieSession
+from django.db.models import QuerySet
 
 
 def create_movie_session(movie_show_time: datetime,
@@ -16,7 +17,7 @@ def create_movie_session(movie_show_time: datetime,
     return movie_session
 
 
-def get_movies_sessions(session_date: str = None) -> list:
+def get_movies_sessions(session_date: str = None) -> QuerySet:
     if session_date:
         try:
             date_obj = datetime.strptime(session_date, "%Y-%m-%d").date()
@@ -29,7 +30,7 @@ def get_movies_sessions(session_date: str = None) -> list:
     return sessions
 
 
-def get_movie_session_by_id(movie_session_id: int) -> MovieSession:
+def get_movie_session_by_id(movie_session_id: int) -> Optional[MovieSession]:
     try:
         return MovieSession.objects.get(id=movie_session_id)
     except MovieSession.DoesNotExist:
